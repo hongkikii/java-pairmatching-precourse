@@ -22,7 +22,11 @@ public class PairInfo {
     }
 
     public List<Pair> get(Section section) {
-        return Collections.unmodifiableList(value.get(findKey(section)));
+        List<Pair> pairs = value.get(findKey(section));
+        if (pairs == null) {
+            return null;
+        }
+        return Collections.unmodifiableList(pairs);
     }
 
     public void reMatch(Section section) {

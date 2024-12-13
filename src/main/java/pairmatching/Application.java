@@ -37,7 +37,15 @@ public class Application {
                 outputView.show(pairInfo, section);
             }
             if (function.equals("2")) {
-
+                while(true) {
+                    try {
+                        Section section = inputView.readSection();
+                        outputView.show(pairInfo, section);
+                        break;
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
             }
             if (function.equals("3")) {
                 pairInfo = new PairInfo();
