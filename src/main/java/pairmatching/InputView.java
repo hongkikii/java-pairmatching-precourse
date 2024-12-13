@@ -72,4 +72,20 @@ public class InputView {
         }
         return new Section(Course.getBy(split[0]), level, Mission.getBy(split[2], level));
     }
+
+    public boolean readIsNegativeAnswer() {
+        while (true) {
+            System.out.println("매칭 정보가 있습니다. 다시 매칭하시겠습니까?");
+            System.out.println("네 | 아니오");
+
+            String answerCandidate = Console.readLine();
+            if(answerCandidate.equals("네")) {
+                return false;
+            }
+            if(answerCandidate.equals("아니오")) {
+                return true;
+            }
+            throw new IllegalArgumentException("[ERROR] 잘못된 입력입니다.");
+        }
+    }
 }

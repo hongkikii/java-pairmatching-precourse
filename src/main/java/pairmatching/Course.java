@@ -4,13 +4,15 @@ import java.util.EnumSet;
 import java.util.Optional;
 
 public enum Course {
-    BACKEND("백엔드"),
-    FRONTEND("프론트엔드");
+    BACKEND("백엔드", "backend-crew.md"),
+    FRONTEND("프론트엔드", "frontend-crew.md");
 
     private final String name;
+    private final String fileName;
 
-    Course(String name) {
+    Course(String name, String fileName) {
         this.name = name;
+        this.fileName = fileName;
     }
 
     public static boolean isNotContained(String name) {
@@ -28,6 +30,10 @@ public enum Course {
                 .filter(course -> course.name.equals(name))
                 .findFirst()
                 .orElseThrow();
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 }
 

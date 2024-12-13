@@ -10,4 +10,12 @@ public class Section {
         this.level = level;
         this.mission = mission;
     }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public boolean isEqual(Section section) {
+        return course.equals(section.course) && mission.equals(section.mission);
+    }
 }
