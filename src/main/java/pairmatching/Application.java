@@ -11,7 +11,7 @@ public class Application {
                 return;
             }
             if(function.equals("1")) {
-
+                Section section = inputView.readSection();
             }
             if (function.equals("2")) {
 
