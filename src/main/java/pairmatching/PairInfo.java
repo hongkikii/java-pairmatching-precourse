@@ -36,7 +36,7 @@ public class PairInfo {
         }
         List<Pair> newPairs = makePairs(section);
         for (int i = 1; i <= 3; i++) {
-            if(isNotSamePair(key.getLevel(), newPairs)) {
+            if(isNotSamePair(section, newPairs)) {
                 value.put(key, newPairs);
                 return;
             }
@@ -45,10 +45,10 @@ public class PairInfo {
         throw new IllegalArgumentException("[ERROR] 매칭에 실패했습니다.");
     }
 
-    private boolean isNotSamePair(Level level, List<Pair> newPairs) {
+    protected boolean isNotSamePair(Section section, List<Pair> newPairs) {
         List<List<Pair>> sameLevelPairs = new ArrayList<>();
         for(Section key : value.keySet()) {
-            if(key.getLevel().equals(level)) {
+            if(key.getLevel().equals(section.getLevel()) && key.getCourse().equals(section.getCourse())) {
                 sameLevelPairs.add(value.get(key));
             }
         }
@@ -73,7 +73,7 @@ public class PairInfo {
         return null;
     }
 
-    private List<Pair> makePairs(Section section) {
+    protected List<Pair> makePairs(Section section) {
         List<Pair> pairs = new ArrayList<>();
         List<String> crews = loadCrewName(section);
         List<String> shuffleCrews = Randoms.shuffle(crews);
