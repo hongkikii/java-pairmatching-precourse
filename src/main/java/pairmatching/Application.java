@@ -53,8 +53,8 @@ public class Application {
                 }
             }
             if (function.equals("3")) {
-//                pairInfo = new PairInfo();
-//                outputView.showResetComplete();
+                pairInfo = new PairInfo();
+                outputView.showResetComplete();
             }
         }
     }
