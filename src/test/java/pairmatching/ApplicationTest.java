@@ -38,4 +38,45 @@ class ApplicationTest extends NsTest {
     public void runMain() {
         Application.main(new String[]{});
     }
+
+    @Test
+    void 홀수_인원_페어_매칭() {
+        assertShuffleTest(
+                () -> {
+                    run("1", "백엔드, 레벨1, 자동차경주", "Q");
+                    assertThat(output()).contains("태웅 : 백호", "치수 : 태섭 : 향미");
+                },
+                Arrays.asList("태웅", "백호", "치수", "태섭", "향미")
+        );
+    }
+
+    @Test
+    void 없는_과정에_대한_예외_처리() {
+        assertSimpleTest(
+                () -> {
+                    runException("1", "인프라, 레벨1, 자동차경주");
+                    assertThat(output()).contains(ERROR_MESSAGE);
+                }
+        );
+    }
+
+    @Test
+    void 없는_레벨에_대한_예외_처리() {
+        assertSimpleTest(
+                () -> {
+                    runException("1", "백엔드, 레벨6, 자동차경주");
+                    assertThat(output()).contains(ERROR_MESSAGE);
+                }
+        );
+    }
+
+    @Test
+    void 레벨과_미션이_맞지_않는_경우의_예외_처리() {
+        assertSimpleTest(
+                () -> {
+                    runException("1", "백엔드, 레벨1, 배포");
+                    assertThat(output()).contains(ERROR_MESSAGE);
+                }
+        );
+    }
 }
