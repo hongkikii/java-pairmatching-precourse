@@ -29,28 +29,39 @@ public class PairInfo {
         return Collections.unmodifiableList(pairs);
     }
 
-    public void reMatch(Section section) {
-        int tryCount = 1;
-        List<Pair> oldPairs = value.get(findKey(section));
-        outer:
-        while (tryCount <= 3) {
-            List<Pair> newPairs = makePairs(findKey(section));
-            for(Pair oldPair : oldPairs) {
-                for(Pair newPair : newPairs) {
-                    if(oldPair.containSameCrewWith(newPair)) {
-                        tryCount++;
-                        continue outer;
-                    }
-                }
+    public void match(Section section) {
+        Section key = findKey(section);
+        if (key == null) {
+            key = section;
+        }
+        List<Pair> newPairs = makePairs(section);
+        for (int i = 1; i <= 3; i++) {
+            if(isNotSamePair(key.getLevel(), newPairs)) {
+                value.put(key, newPairs);
+                return;
             }
-            value.put(findKey(section), newPairs);
-            return;
+            newPairs = makePairs(section);
         }
         throw new IllegalArgumentException("[ERROR] 매칭에 실패했습니다.");
     }
 
-    public void match(Section section) {
-        value.put(section, makePairs(section));
+    private boolean isNotSamePair(Level level, List<Pair> newPairs) {
+        List<List<Pair>> sameLevelPairs = new ArrayList<>();
+        for(Section key : value.keySet()) {
+            if(key.getLevel().equals(level)) {
+                sameLevelPairs.add(value.get(key));
+            }
+        }
+        for(List<Pair> oldPairs : sameLevelPairs) {
+            for(Pair oldPair : oldPairs) {
+                for(Pair newPair : newPairs) {
+                    if(oldPair.containSameCrewWith(newPair)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     public Section findKey(Section compare) {

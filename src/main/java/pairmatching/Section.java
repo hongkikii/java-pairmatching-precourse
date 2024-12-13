@@ -11,6 +11,10 @@ public class Section {
         this.mission = mission;
     }
 
+    public Level getLevel() {
+        return level;
+    }
+
     public Course getCourse() {
         return course;
     }

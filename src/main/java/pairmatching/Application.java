@@ -8,36 +8,30 @@ public class Application {
         PairInfo pairInfo = new PairInfo();
         while(true) {
             String function = inputView.readFunction();
-
             if(function.equals("Q")) {
                 return;
             }
             if(function.equals("1")) {
                 int idx = 0;
-                Section section = null;
-                section = inputView.readSection();
-                outer:
+                Section section = inputView.readSection();
                 while(true) {
                     if (idx > 0) {
                         section = inputView.readPartSection();
                     }
                     if(pairInfo.isContained(section)) {
-                        while(true) {
-                            try {
-                                boolean isNegative = inputView.readIsNegativeAnswer();
-                                if (isNegative) {
-                                    idx++;
-                                    continue outer;
-                                }
-                                pairInfo.reMatch(section);
-                                break outer;
-                            } catch (IllegalArgumentException e) {
-                                System.out.println(e.getMessage());
-                            }
+                        boolean isNegativeToRetry = inputView.readRetryAnswer();
+                        if (isNegativeToRetry) {
+                            idx++;
+                            continue;
                         }
                     }
-                    pairInfo.match(section);
-                    break;
+                    try {
+                        pairInfo.match(section);
+                        break;
+                    }
+                    catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
                 outputView.show(pairInfo, section);
             }

@@ -90,7 +90,7 @@ public class InputView {
         return new Section(Course.getBy(split[0]), level, Mission.getBy(split[2], level));
     }
 
-    public boolean readIsNegativeAnswer() {
+    public boolean readRetryAnswer() {
         while (true) {
             System.out.println();
             System.out.println("매칭 정보가 있습니다. 다시 매칭하시겠습니까?");
