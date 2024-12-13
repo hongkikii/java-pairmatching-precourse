@@ -18,12 +18,11 @@ public class PairInfo {
     }
 
     public boolean isContained(Section section) {
-        if(findKey(section) == null) return false;
-        return true;
+        return findKey(section) != null;
     }
 
     public List<Pair> get(Section section) {
-        return Collections.unmodifiableList(value.get(section));
+        return Collections.unmodifiableList(value.get(findKey(section)));
     }
 
     public void reMatch(Section section) {
@@ -31,7 +30,7 @@ public class PairInfo {
         List<Pair> oldPairs = value.get(findKey(section));
         outer:
         while (tryCount <= 3) {
-            List<Pair> newPairs = makePairs(section);
+            List<Pair> newPairs = makePairs(findKey(section));
             for(Pair oldPair : oldPairs) {
                 for(Pair newPair : newPairs) {
                     if(oldPair.containSameCrewWith(newPair)) {
@@ -40,10 +39,10 @@ public class PairInfo {
                     }
                 }
             }
-            value.put(section, newPairs);
+            value.put(findKey(section), newPairs);
             return;
         }
-        throw new IllegalArgumentException("[ERROR] 매칭 이력이 없습니다.");
+        throw new IllegalArgumentException("[ERROR] 매칭에 실패했습니다.");
     }
 
     public void match(Section section) {
@@ -65,7 +64,7 @@ public class PairInfo {
         List<String> shuffleCrews = Randoms.shuffle(crews);
         for (int i = 0; i < shuffleCrews.size(); i += 2) {
             if (i == shuffleCrews.size() - 1) {
-                pairs.getLast().add(crews.get(i));
+                pairs.getLast().add(shuffleCrews.get(i));
                 break;
             }
             String crew1 = shuffleCrews.get(i);
