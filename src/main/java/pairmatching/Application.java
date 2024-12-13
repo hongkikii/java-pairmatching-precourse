@@ -13,15 +13,20 @@ public class Application {
                 return;
             }
             if(function.equals("1")) {
+                int idx = 0;
                 Section section = null;
+                section = inputView.readSection();
                 outer:
                 while(true) {
-                    section = inputView.readSection();
+                    if (idx > 0) {
+                        section = inputView.readPartSection();
+                    }
                     if(pairInfo.isContained(section)) {
                         while(true) {
                             try {
                                 boolean isNegative = inputView.readIsNegativeAnswer();
                                 if (isNegative) {
+                                    idx++;
                                     continue outer;
                                 }
                                 pairInfo.reMatch(section);
@@ -48,7 +53,8 @@ public class Application {
                 }
             }
             if (function.equals("3")) {
-                pairInfo = new PairInfo();
+//                pairInfo = new PairInfo();
+//                outputView.showResetComplete();
             }
         }
     }

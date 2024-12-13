@@ -17,4 +17,9 @@ public class OutputView {
         }
         System.out.println();
     }
+
+//    public void showResetComplete() {
+//        System.out.println();
+//        System.out.println("초기화 되었습니다.");
+//    }
 }
